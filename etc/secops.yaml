@@ -1,0 +1,24 @@
+# Configuration file version
+version: v1
+# Base configuration
+common:
+  # By default it's equal to hostname.
+  node_name:
+  # run as master or node
+  run_mode: master
+  # Data directory where free-access daemon keeps its data
+  data_dir: /var/lib/free-access
+  # master address(node)
+  # master ip and master tunnel listen port
+  master_addr: 127.0.0.1:6666
+  # tunnel listen port (master)
+  tunnel_listen_port: 6666
+  # web listen port(master)
+  web_listen_port: 8080
+  # Configuration for the storage back-end used for the cluster state
+  storage:
+    # By default free-access uses a SQLite database in the `data_dir`
+    db_type: sqlite
+  cache:
+    # By default free-access uses local cache
+    cache_type: local

@@ -1,0 +1,47 @@
+syntax="proto3";
+option go_package="./;protoc";
+package common;
+
+message Empty {}
+
+message Rsp {
+    int32 code = 1;
+    string msg = 2;
+}
+
+message NodeInfo {
+    string nodeID  = 1;
+    string nodeName = 2;
+    repeated NodeLabel labels = 3;
+    message NodeLabel {
+        string key = 1;
+        string value = 2;
+    }
+}
+
+message ShellSession {
+    string sessionID = 1;
+}
+
+message ShellCMD {
+    string sessionID  = 1;
+    bytes data = 2;
+}
+
+message File {
+    string src = 1;
+    string dst = 2;
+    string md5 = 3;
+    int64 startOffset = 4;
+    int64 endOffset = 5;
+    bytes data = 6;
+    bool finished = 7;
+}
+
+service Common{
+    rpc heartbeat(stream NodeInfo) returns(Empty);
+    rpc newShell(Empty)returns(stream ShellSession);
+    rpc shellCMD(stream ShellCMD)returns(stream ShellCMD);
+    rpc upload(Empty)returns(stream File);
+    rpc download(stream File)returns(stream File);
+}
